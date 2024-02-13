@@ -2,32 +2,37 @@ import "./stylesheets/javascript-table.css";
 import TableRenderer from "./controllers/controller.tableRenderer";
 
 export default class Table {
-  constructor(
-    tableDivId,
-    tableData,
-    perPageLimit,
-    visiblecheckboxStatus,
-    tableClasses,
-    showingLine,
-    dark
-  ) {
+  constructor(tableDivId, tableData, options) {
     if (tableDivId !== undefined && tableData !== undefined) {
       const tableInstance = new TableRenderer(
         tableDivId,
         tableData,
-        perPageLimit !== undefined ? perPageLimit : 10,
-        visiblecheckboxStatus !== undefined ? visiblecheckboxStatus : true,
-        tableClasses !== undefined
-          ? tableClasses
+        Object.prototype.hasOwnProperty.call(options, "perPageLimit") &&
+        options?.perPageLimit !== undefined
+          ? options.perPageLimit
+          : 10,
+        Object.prototype.hasOwnProperty.call(
+          options,
+          "visiblecheckboxStatus"
+        ) && options?.visiblecheckboxStatus !== undefined
+          ? options.visiblecheckboxStatus
+          : true,
+        Object.prototype.hasOwnProperty.call(options, "tableClasses") &&
+        options?.tableClasses !== undefined
+          ? options.tableClasses
           : {
               table: "ticket-tabel",
               tableParent: "tickets-tabel",
               parentClass: "all-support-ticket-tabel",
             },
-        showingLine !== undefined
-          ? showingLine
+        Object.prototype.hasOwnProperty.call(options, "showingLine") &&
+        options?.showingLine !== undefined
+          ? options.showingLine
           : "Showing %start% to %end% of %total% Tickets",
-        dark !== undefined ? dark : false
+        Object.prototype.hasOwnProperty.call(options, "dark") &&
+        options?.dark !== undefined
+          ? options.dark
+          : false
       );
       if (document.getElementById(tableDivId)) {
         tableInstance.render();
