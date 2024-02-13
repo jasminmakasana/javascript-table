@@ -3,34 +3,44 @@ import TableRenderer from "./controllers/controller.tableRenderer";
 
 export default class Table {
   constructor(tableDivId, tableData, options) {
-    if (tableDivId !== undefined && tableData !== undefined) {
+    if (
+      tableDivId !== undefined &&
+      tableData !== undefined &&
+      (!options || (options && typeof options === "object" && options !== null))
+    ) {
       const tableInstance = new TableRenderer(
         tableDivId,
         tableData,
+        options &&
         Object.prototype.hasOwnProperty.call(options, "perPageLimit") &&
-        options?.perPageLimit !== undefined
+        options.perPageLimit !== undefined
           ? options.perPageLimit
           : 10,
+        options &&
         Object.prototype.hasOwnProperty.call(
           options,
           "visiblecheckboxStatus"
-        ) && options?.visiblecheckboxStatus !== undefined
+        ) &&
+        options.visiblecheckboxStatus !== undefined
           ? options.visiblecheckboxStatus
           : true,
+        options &&
         Object.prototype.hasOwnProperty.call(options, "tableClasses") &&
-        options?.tableClasses !== undefined
+        options.tableClasses !== undefined
           ? options.tableClasses
           : {
               table: "ticket-tabel",
               tableParent: "tickets-tabel",
               parentClass: "all-support-ticket-tabel",
             },
+        options &&
         Object.prototype.hasOwnProperty.call(options, "showingLine") &&
-        options?.showingLine !== undefined
+        options.showingLine !== undefined
           ? options.showingLine
           : "Showing %start% to %end% of %total% Tickets",
+        options &&
         Object.prototype.hasOwnProperty.call(options, "dark") &&
-        options?.dark !== undefined
+        options.dark !== undefined
           ? options.dark
           : false
       );
