@@ -1,0 +1,555 @@
+html,
+body,
+#root {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+}
+
+
+.custom-table {
+    display: block;
+    width: 100%;
+}
+
+.custom-table .toolbar {
+    padding: 0px 0px 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.custom-table .toolbar .showing {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 34px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.custom-table .toolbar .showby {
+    display: inline-block;
+    border-left: 1px solid #a9b9c6;
+    padding-left: 15px;
+    margin-left: 15px;
+}
+
+.custom-table .toolbar .showby label {
+    display: inline-block;
+    font-size: 13px;
+    color: #333333;
+    font-weight: 500;
+    padding-right: 15px;
+    line-height: 34px;
+    margin-bottom: 0;
+}
+
+.custom-table .toolbar .showby .form-control {
+    display: inline-block;
+    width: 75px;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 5px 4px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.custom-table .toolbar .showby span {
+    display: inline-block;
+    font-size: 13px;
+    line-height: 34px;
+    color: #333333;
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+.theme-light .custom-table .toolbar .showing {
+    color: #3b4859;
+}
+
+.theme-light .custom-table .toolbar .showby span {
+    color: #3b4859;
+}
+
+.custom-table .toolbar .multiselect {
+    border-left: 1px solid #a9b9c6;
+    padding-left: 15px;
+    margin-left: 15px;
+    z-index: 10;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.custom-table .toolbar .multiselect .arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    padding: 2px;
+}
+
+.custom-table .toolbar .multiselect .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.custom-table .toolbar .multiselect .form-control.select-label {
+    width: 170px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.custom-table .toolbar .multiselect .options {
+    position: absolute;
+    top: 34px;
+    background-color: #ffffff;
+    padding: 15px 15px 10px 15px;
+    width: 165px;
+    box-shadow: 0px 0px 6px -4px #3b4859;
+    border-radius: 3px;
+    display: block;
+}
+.custom-table .toolbar .multiselect .options.showColumnSelect {
+    display: none;
+}
+
+.custom-table .toolbar .multiselect .options .option {
+    display: block;
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    color: #3b4859;
+    font-size: 13px;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.custom-table .toolbar .multiselect .options .option input {
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+
+.custom-table .toolbar .filter-search-control {
+    color: #555;
+    display: flex;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    width: fit-content;
+    position: absolute;
+    right: 18px;
+}
+
+.custom-table .toolbar .filter-search-control input[type="search"] {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 6px;
+    color: inherit;
+    border: 1px solid transparent;
+    border-radius: inherit;
+}
+
+.custom-table .toolbar .filter-search-control input[type="search"]::placeholder {
+    color: #bbb;
+}
+
+.custom-table .toolbar .filter-search-control button[type="submit"] {
+    text-indent: -999px;
+    overflow: hidden;
+    width: 40px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+    opacity: 0.7;
+}
+
+.custom-table .toolbar .filter-search-control button[type="submit"]:hover {
+    opacity: 1;
+}
+
+.custom-table .toolbar .filter-search-control button[type="submit"]:focus,
+input[type="search"]:focus {
+    outline: none;
+}
+
+.custom-table table {
+    white-space: nowrap;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table .sort-icon {
+    display: inline-block;
+    padding-left: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.custom-table .checkbox {
+    margin-top: -4px;
+    margin-right: 0px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.custom-table .sort-icon.sort-none:before {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent #dddddd transparent;
+    margin-bottom: 2px;
+}
+
+.custom-table .sort-icon.sort-none:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 4px 0 4px;
+    border-color: #dddddd transparent transparent transparent;
+    margin-top: 2px;
+}
+
+.custom-table .sort-icon.sort-descending:after {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 4px 0 4px;
+    border-color: #dddddd transparent transparent transparent;
+    margin-top: 0;
+}
+
+.custom-table .sort-icon.sort-ascending:before {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 8px 4px;
+    border-color: transparent transparent #dddddd transparent;
+    margin-bottom: 0px;
+}
+
+.custom-table .pagination {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.custom-table .pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.custom-table .pagination div {
+    display: flex;
+}
+
+.custom-table .pagination div {
+    display: flex;
+    max-width: 400px;
+    overflow-x: auto;
+}
+
+.custom-table .pagination a {
+    display: block;
+    padding: 5px 10px;
+    font-size: 11px;
+    color: #868f9b;
+    line-height: 16px;
+    border: 1px solid #cbcfd4;
+    border-right: none;
+}
+
+.custom-table .pagination li a {
+    border-radius: 0px !important;
+    text-decoration: none;
+}
+
+.custom-table .pagination a:hover {
+    background-color: #cbcfd4;
+}
+
+.custom-table .pagination a.active {
+    background-color: #cbcfd4;
+    color: black;
+}
+
+.custom-table .pagination a.deactive {
+    background-color: white;
+    color: black;
+}
+
+.custom-table .pagination a.desable {
+    background-color: rgb(94, 87, 87);
+    color: white;
+}
+
+.custom-table .pagination a.enable {
+    background-color: #3b4859;
+    color: #ffffff;
+}
+
+.custom-table .pagination .previous a {
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.custom-table .pagination .next a {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 1px solid #cbcfd4;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.custom-table .data-table-parent {
+    overflow-x: auto;
+    display: flex;
+    width: 100%;
+    margin-bottom: 1rem;
+    height: calc(100% - 49px);
+}
+
+.custom-table .data-table-parent .data-table th,
+.custom-table .data-table-parent .data-table td {
+    padding: 7px 10px;
+    text-align: left;
+}
+
+.custom-table .data-table-parent .data-table tbody tr:nth-child(odd) {
+    background-color: #e9edf2;
+}
+
+.custom-table .data-table-parent .data-table tbody tr.checked-row {
+    background-color: #ababab !important;
+}
+
+.custom-table .data-table-parent .data-table .btn-link {
+    color: #3b7cff !important;
+    padding: 0 5px;
+    font-size: 18px;
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+.custom-table.dark .data-table-parent .data-table .btn-link {
+    color: #ababab !important;
+}
+
+.custom-table .data-table-parent .data-table .enabled {
+    width: 8px;
+    height: 8px;
+    background-color: #004fac;
+    display: inline-block;
+    position: relative;
+    margin: 10px 10px 0 0;
+    vertical-align: top;
+}
+
+.custom-table .data-table-parent .data-table .enabled:after {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    width: 16px;
+    height: 16px;
+    content: "";
+    border: 1px solid #004fac;
+    border-radius: 50%;
+}
+
+.custom-table.dark .data-table-parent .data-table .enabled {
+    background-color: #ababab;
+}
+
+.custom-table.dark .data-table-parent .data-table .enabled:after {
+    border-color: #ababab;
+}
+
+.custom-table.dark .toolbar .showing {
+    color: #ffffff;
+}
+
+.custom-table.dark .toolbar .showby label {
+    color: #ffffff;
+}
+
+.custom-table.dark .toolbar .showby span {
+    color: #ffffff;
+}
+
+.custom-table.dark .data-table-parent .data-table th,
+.custom-table.dark .data-table-parent .data-table td {
+    color: #ffffff;
+}
+
+.custom-table.dark .data-table-parent .data-table tbody tr:nth-child(odd) {
+    background-color: #333333;
+}
+
+.custom-table.dark .data-table-parent .data-table tbody tr.checked-row {
+    background-color: #202226 !important;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 768px) {
+    .custom-table .toolbar {
+        float: left;
+    }
+
+    .custom-table .toolbar .showing {
+        float: left;
+        width: 50%;
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        width: 50%;
+        float: right;
+        text-align: right;
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby label {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby span {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby .form-control {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .multiselect {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        width: 50%;
+        margin-top: 15px;
+        float: left;
+    }
+
+    .custom-table .toolbar .multiselect .form-control.select-label {
+        font-size: 11px;
+        padding: 0.575rem 0.75rem;
+        height: 34px;
+    }
+
+    .custom-table .toolbar .multiselect .options {
+        left: 0;
+    }
+
+    .custom-table .toolbar .filter-search-control {
+        float: right;
+        margin-top: 15px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 320px) {
+    .custom-table .toolbar {
+        float: left;
+    }
+
+    .custom-table .toolbar .showing {
+        float: left;
+        width: 100%;
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        width: 100%;
+        float: left;
+        text-align: left;
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby label {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby span {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .showby .form-control {
+        font-size: 11px;
+    }
+
+    .custom-table .toolbar .multiselect {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        width: 100%;
+        margin-top: 15px;
+        float: left;
+    }
+
+    .custom-table .toolbar .multiselect .form-control.select-label {
+        font-size: 11px;
+        padding: 0.575rem 0.75rem;
+        height: 34px;
+    }
+
+    .custom-table .toolbar .multiselect .options {
+        left: 0;
+    }
+
+    .custom-table .toolbar .filter-search-control {
+        float: left !important;
+        margin-top: 15px;
+    }
+
+
+}

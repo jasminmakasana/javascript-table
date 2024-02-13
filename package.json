@@ -1,0 +1,34 @@
+{
+  "name": "javascript-table",
+  "version": "1.1.0",
+  "description": "Dynamic Table Generator is a versatile JavaScript package designed to simplify the process of creating interactive tables from data sets. Built with core JavaScript, it offers compatibility with any JavaScript library, providing flexibility and ease of integration into various projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasminmakasana/javascript-table.git"
+  },
+  "keywords": [
+    "react",
+    "react-table",
+    "table",
+    "component",
+    "ui",
+    "core-javascript-table",
+    "angular",
+    "table-component",
+    "vue",
+    "next.js",
+    "react.js",
+    "next",
+    "javascript table"
+  ],
+  "author": "Infonium Technologies",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasminmakasana/javascript-table/issues"
+  },
+  "homepage": "https://github.com/jasminmakasana/javascript-table#readme"
+}

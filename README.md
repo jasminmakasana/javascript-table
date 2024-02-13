@@ -1,0 +1,2 @@
+# javascript-table
+Dynamic Table Generator is a versatile JavaScript package designed to simplify the process of creating interactive tables from data sets. Built with core JavaScript, it offers compatibility with any JavaScript library, providing flexibility and ease of integration into various projects.
