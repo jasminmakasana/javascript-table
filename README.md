@@ -89,16 +89,19 @@ const showingLine = "Showing %start% to %end% of %total% Tickets" // It will ren
 
 const dark = true; // Dark theme
 
-
-const table = new Table(idOfHTMLElement, {
-  columns: columns,
-  data: data
-},
+const options = {
   perPageLimit,
   visiblecheckboxStatus,
-  cssClasses,
+  tableClasses: cssClasses,
   showingLine,
   dark
+};
+
+const table = new Table(idOfHTMLElement, {
+    columns: columns,
+    data: data
+  },
+  options
 );
 
 ```
