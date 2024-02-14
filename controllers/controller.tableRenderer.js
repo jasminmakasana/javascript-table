@@ -7,7 +7,8 @@ export default class TableRenderer {
     visiblecheckboxStatus,
     tableClasses,
     showingLine,
-    dark
+    dark,
+    onChangeCheckkbox
   ) {
     this.data = valueFromData.data;
     this.displayData = valueFromData.data;
@@ -25,6 +26,7 @@ export default class TableRenderer {
     this.showingLine = showingLine;
     this.dark = dark;
     this.tableDivId = tableDivId;
+    this.sendCheckboxContentCallback = onChangeCheckkbox;
 
     this.paginationRef = document.createElement("div");
     this.paginationRef.className = "pagination";
@@ -34,13 +36,8 @@ export default class TableRenderer {
   }
 
   tableBodyData() {
-    const {
-      displayData,
-      perPageLimit,
-      currentPage,
-      columns,
-      visibleCheckbox,
-    } = this;
+    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } =
+      this;
     const retData = [];
     const length = displayData.length;
     const cLength = columns.length;
@@ -74,7 +71,7 @@ export default class TableRenderer {
               }
               if (column.renderCallback) {
                 const jsx = column.renderCallback(row[key], row);
-                tdJSX.push(jsx);
+                tdJSX.push(`<td>${jsx}</td>`);
               } else {
                 tdJSX.push(`<td>${row[key]}</td>`);
               }
@@ -153,6 +150,7 @@ export default class TableRenderer {
       displayData[j].checkStatus = checked;
     }
     this.isAllChecked = checked;
+    this.sendCheckboxContentCallback(displayData);
     this.renderTableUpdate();
   }
 
@@ -161,9 +159,11 @@ export default class TableRenderer {
     const checked = e.target.checked;
     let status = false;
     let countCheckedCheckbox = 0;
+    const isCheckedData = [];
     displayData[index].checkStatus = checked;
     for (let j = 0; j < displayData.length; j++) {
       if (displayData[j].checkStatus === true) {
+        isCheckedData.push(displayData[j]);
         countCheckedCheckbox++;
       } else {
         countCheckedCheckbox--;
@@ -175,6 +175,7 @@ export default class TableRenderer {
       status = false;
     }
     this.isAllChecked = status;
+    this.sendCheckboxContentCallback(isCheckedData);
     this.renderTableUpdate();
   }
 
