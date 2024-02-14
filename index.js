@@ -4,25 +4,41 @@ import TableRenderer from "./controllers/controller.tableRenderer";
 export default class Table {
   constructor(tableDivId, tableData, options, onChangeCheckkbox) {
     try {
-      if (
-        tableDivId !== undefined &&
-        typeof tableDivId === "string" &&
-        tableData !== undefined &&
-        tableData !== null &&
-        typeof tableData === "object" &&
-        !Array.isArray(tableData) &&
-        Object.prototype.hasOwnProperty.call(tableData, "columns") &&
-        Object.prototype.hasOwnProperty.call(tableData, "data") &&
-        Array.isArray(tableData.columns) &&
-        Array.isArray(tableData.data) &&
-        (!options ||
-          (options &&
-            typeof options === "object" &&
-            !Array.isArray(options) &&
-            options !== null)) &&
-        !onChangeCheckkbox &&
-        typeof onChangeCheckkbox === "function"
+      if (!tableDivId || typeof tableDivId !== "string") {
+        console.error(
+          new Error("element where you want to render table is not available")
+        );
+      } else if (
+        tableData === undefined ||
+        tableData === null ||
+        typeof tableData !== "object" ||
+        Array.isArray(tableData) ||
+        !Object.prototype.hasOwnProperty.call(tableData, "columns") ||
+        !Object.prototype.hasOwnProperty.call(tableData, "data") ||
+        !Array.isArray(tableData.columns) ||
+        !Array.isArray(tableData.data)
       ) {
+        console.error(
+          new Error(
+            "table data which you want to render is not available or is in invalid format"
+          )
+        );
+      } else if (
+        options === "" ||
+        options === 0 ||
+        options === false ||
+        (options && typeof options !== "object") ||
+        (options && Array.isArray(options))
+      ) {
+        console.error(new Error("please provide option data in proper format"));
+      } else if (
+        onChangeCheckkbox === "" ||
+        onChangeCheckkbox === 0 ||
+        onChangeCheckkbox === false ||
+        (onChangeCheckkbox && typeof onChangeCheckkbox !== "function")
+      ) {
+        console.error(new Error("handle checkbox callback is invalid"));
+      } else {
         const tableInstance = new TableRenderer(
           tableDivId,
           tableData,
@@ -85,34 +101,6 @@ export default class Table {
         window.handleChecked = (e, index) =>
           tableInstance.handleChecked(e, index);
         window.toggleColumnSelect = (e) => tableInstance.toggleColumnSelect(e);
-      } else {
-        if (tableDivId && typeof tableDivId !== "string") {
-          console.error(
-            Error("element where you want to render table is not available")
-          );
-        } else if (
-          tableData &&
-          typeof tableData !== "object" &&
-          Array.isArray(tableData) &&
-          !(
-            Object.prototype.hasOwnProperty.call(tableData, "columns") &&
-            Object.prototype.hasOwnProperty.call(tableData, "data") &&
-            Array.isArray(tableData.columns) &&
-            Array.isArray(tableData.data)
-          )
-        ) {
-          console.error(
-            Error(
-              "table data which you want to render is not available or is in invalid format"
-            )
-          );
-        } else if (options && typeof options !== "object" && options === null) {
-          console.error(Error("please provide option data in proper format"));
-        } else if (typeof onChangeCheckkbox !== "function") {
-          console.error(Error("handle checkbox callback is invalid"));
-        } else {
-          console.error(Error("something went wrong"));
-        }
       }
     } catch (error) {
       console.error(error);
