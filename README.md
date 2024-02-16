@@ -125,6 +125,7 @@ const table = new Table(idOfHTMLElement, {
 ```
 
 ## Demo
+![Screen Recording - Feb 16, 2024](https://github.com/jasminmakasana/javascript-table/assets/78531888/1a1848c3-50a4-4f5a-b268-595f721b7808)
 
-Please click link for preview
+
 
