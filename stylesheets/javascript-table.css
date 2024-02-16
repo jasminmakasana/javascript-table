@@ -1,14 +1,17 @@
 html,
 body,
 #root {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  overflow: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
 }
 
+.container-fluid {
+    height: calc(100% - 36px);
+}
 
 .custom-table {
     display: block;
@@ -16,11 +19,13 @@ body,
 }
 
 .custom-table .toolbar {
-    padding: 0px 0px 15px;
-    width: 100%;
+    padding:14px;
+    width:calc(100% - 28px);
     display: flex;
     align-items: center;
-    margin-top: 16px;
+    justify-content: space-between;
+    background-color: #ffffff;
+    position: fixed;
 }
 
 .custom-table .toolbar .showing {
@@ -121,7 +126,7 @@ body,
 
 .custom-table .toolbar .multiselect .options {
     position: absolute;
-    top: 34px;
+    top: 50px;
     background-color: #ffffff;
     padding: 15px 15px 10px 15px;
     width: 165px;
@@ -129,6 +134,7 @@ body,
     border-radius: 3px;
     display: block;
 }
+
 .custom-table .toolbar .multiselect .options.showColumnSelect {
     display: none;
 }
@@ -157,8 +163,6 @@ body,
     border: 1px solid currentColor;
     border-radius: 5px;
     width: fit-content;
-    position: absolute;
-    right: 18px;
 }
 
 .custom-table .toolbar .filter-search-control input[type="search"] {
@@ -200,6 +204,7 @@ input[type="search"]:focus {
     white-space: nowrap;
     width: 100%;
     border-collapse: collapse;
+    margin: 64px 0px;
 }
 
 .custom-table .sort-icon {
@@ -263,6 +268,12 @@ input[type="search"]:focus {
 .custom-table .pagination {
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    background-color: white;
+    padding: 14px;
 }
 
 .custom-table .pagination ul {
@@ -349,11 +360,8 @@ input[type="search"]:focus {
 }
 
 .custom-table .data-table-parent {
-    overflow-x: auto;
-    display: flex;
+    overflow: auto;
     width: 100%;
-    margin-bottom: 1rem;
-    height: calc(100% - 49px);
 }
 
 .custom-table .data-table-parent .data-table th,
@@ -436,118 +444,29 @@ input[type="search"]:focus {
     background-color: #202226 !important;
 }
 
-@media only screen and (max-width: 1200px) and (min-width: 768px) {
-    .custom-table .toolbar {
-        float: left;
-    }
 
-    .custom-table .toolbar .showing {
-        float: left;
-        width: 50%;
-        font-size: 11px;
+@media only screen and (max-width: 900px) and (min-width: 320px) {
+    .custom-table .toolbar {
+        display: block;
     }
 
     .custom-table .toolbar .showby {
         border-left: none;
-        padding-left: 0px;
         margin-left: 0px;
-        width: 50%;
-        float: right;
-        text-align: right;
-        font-size: 11px;
-    }
+        padding-left: 0px;
 
-    .custom-table .toolbar .showby label {
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby span {
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby .form-control {
-        font-size: 11px;
     }
 
     .custom-table .toolbar .multiselect {
         border-left: none;
         padding-left: 0px;
         margin-left: 0px;
-        width: 50%;
-        margin-top: 15px;
-        float: left;
     }
 
-    .custom-table .toolbar .multiselect .form-control.select-label {
-        font-size: 11px;
-        padding: 0.575rem 0.75rem;
-        height: 34px;
+    .custom-table table{
+       margin-top: 120px;
     }
-
-    .custom-table .toolbar .multiselect .options {
-        left: 0;
-    }
-
     .custom-table .toolbar .filter-search-control {
-        float: right;
-        margin-top: 15px;
-    }
-}
-
-@media only screen and (max-width: 767px) and (min-width: 320px) {
-    .custom-table .toolbar {
-        float: left;
-    }
-
-    .custom-table .toolbar .showing {
-        float: left;
-        width: 100%;
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby {
-        border-left: none;
-        padding-left: 0px;
-        margin-left: 0px;
-        width: 100%;
-        float: left;
-        text-align: left;
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby label {
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby span {
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .showby .form-control {
-        font-size: 11px;
-    }
-
-    .custom-table .toolbar .multiselect {
-        border-left: none;
-        padding-left: 0px;
-        margin-left: 0px;
-        width: 100%;
-        margin-top: 15px;
-        float: left;
-    }
-
-    .custom-table .toolbar .multiselect .form-control.select-label {
-        font-size: 11px;
-        padding: 0.575rem 0.75rem;
-        height: 34px;
-    }
-
-    .custom-table .toolbar .multiselect .options {
-        left: 0;
-    }
-
-    .custom-table .toolbar .filter-search-control {
-        float: left !important;
         margin-top: 15px;
     }
 

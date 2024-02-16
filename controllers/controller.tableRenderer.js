@@ -473,6 +473,7 @@ export default class TableRenderer {
     const tableHTML = `
             <div class="${parentClass}">
               <div class="toolbar">
+              <div class="toolbar-left-part">
               <div class="showing">${showingLine}</div>
               <div class="showby">
               <label>Show</label>
@@ -480,7 +481,7 @@ export default class TableRenderer {
                 ${this.displayShowPageLimit()}
               </select>
               <span>entries per page</span>
-            </div>
+         
             <div class="multiselect">
             <div
               class="form-control select-label" id="select-column-field"
@@ -494,13 +495,19 @@ export default class TableRenderer {
             >
               ${this.renderColumns()}
             </div>
-            <form class="filter-search-control">
-            <input type="search" placeholder="Search..." id="search-bar" oninput="onSearchChange(event)" value="${
-              this.searchKey
-            }">
-            <button type="submit">Search</button>
-          </form>
+           
           </div>
+          </div>
+          
+          </div>
+          <div class="toolbar-right-part">
+          <form class="filter-search-control">
+          <input type="search" placeholder="Search..." id="search-bar" oninput="onSearchChange(event)" value="${
+            this.searchKey
+          }">
+          <button type="submit">Search</button>
+        </form>
+        </div>
         </div>
         <div class="${tableParentClass}" id="info-table-element">
           <table class="data-table">
@@ -509,9 +516,7 @@ export default class TableRenderer {
             <tbody id="info-table-Body"></tbody>
           </table>
         </div>
-        <div class="d-block ">
           ${this.peginationOfTable()}
-        </div>
       </div>
     `;
     let tableBody = document.createElement("div");
