@@ -26,6 +26,18 @@ const columns = [
   {
     label: "ID",
     key: "index",
+    renderCallback: (key: any, row: any) => {
+        function handleClickButtonInfo(event: any)          {
+              console.log({ key, row });
+            }
+            const buttonElement = document.createElement("button");
+            buttonElement.innerHTML = row.status;
+            buttonElement.addEventListener(
+              "click",
+              handleClickButtonInfo.bind(this)
+            );
+            return buttonElement;
+        },
   },
   {
     label: "Requester Name",
@@ -97,11 +109,22 @@ const options = {
   dark
 };
 
+
+const handleCheckbox = (selectedRows) => {
+    console.log(selectedRows)
+}  // selectedRows will get list of row with content which user have selected on clicked checkbox in table
+
 const table = new Table(idOfHTMLElement, {
     columns: columns,
     data: data
   },
-  options
+  options,
+  handleCheckbox, // callback for handle selected rows in table
 );
 
 ```
+
+## Demo
+
+Please click link for preview
+
