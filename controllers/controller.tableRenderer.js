@@ -7,7 +7,8 @@ export default class TableRenderer {
     visiblecheckboxStatus,
     tableClasses,
     showingLine,
-    dark
+    dark,
+    onChangeCheckkbox
   ) {
     this.data = valueFromData.data;
     this.displayData = valueFromData.data;
@@ -25,76 +26,84 @@ export default class TableRenderer {
     this.showingLine = showingLine;
     this.dark = dark;
     this.tableDivId = tableDivId;
+    this.sendCheckboxContentCallback = onChangeCheckkbox;
 
     this.paginationRef = document.createElement("div");
     this.paginationRef.className = "pagination";
     window.addEventListener("DOMContentLoaded", (event) => {
       this.render();
+      this.tableBodyData();
+      this.tableHeader();
     });
   }
 
   tableBodyData() {
-    const {
-      displayData,
-      perPageLimit,
-      currentPage,
-      columns,
-      visibleCheckbox,
-    } = this;
-    const retData = [];
+    const { displayData, perPageLimit, currentPage, columns, visibleCheckbox } =
+      this;
     const length = displayData.length;
     const cLength = columns.length;
+    const tableBodyElement = document.getElementById("info-table-Body");
     if (length > 0) {
-      for (let i = 0; i < length; i++) {
-        if (
-          i >= currentPage * perPageLimit &&
-          i <= currentPage * perPageLimit + (perPageLimit - 1)
-        ) {
-          const tdJSX = [];
-          if (visibleCheckbox === true) {
-            tdJSX.push(
-              `<td>
-                      <input
-                        type="checkbox"
-                        id="checkbox-${i}"
-                        ${displayData[i].checkStatus ? "checked" : ""}
-                        class="checkbox"
-                        onchange="onChangeParentCheckbox(event, ${i})"
-                      />
-                    </td>`
+      tableBodyElement.innerHTML = "";
+      if (tableBodyElement) {
+        for (let i = 0; i < length; i++) {
+          if (
+            i >= currentPage * perPageLimit &&
+            i <= currentPage * perPageLimit + (perPageLimit - 1)
+          ) {
+            const tableBodyRowElement = document.createElement("tr");
+            tableBodyRowElement.setAttribute(
+              "class",
+              displayData[i].checkStatus ? "checked-row" : ""
             );
-          }
-          const row = displayData[i];
-          for (let j = 0; j < cLength; j++) {
-            const column = columns[j];
-            if (!column.isRemoved) {
-              let key = column.key;
-              if (column.isCaseInsensitive) {
-                key = key.toLowerCase();
-              }
-              if (column.renderCallback) {
-                const jsx = column.renderCallback(row[key], row);
-                tdJSX.push(jsx);
-              } else {
-                tdJSX.push(`<td>${row[key]}</td>`);
+            if (visibleCheckbox === true) {
+              const tdCheckboxElement = document.createElement("td");
+              const tdInputElement = document.createElement("input");
+              tdInputElement.setAttribute("type", "checkbox");
+              tdInputElement.setAttribute("id", `checkbox-${i}`);
+              tdInputElement.setAttribute("class", "checkbox");
+              tdInputElement.setAttribute(
+                "onchange",
+                `onChangeParentCheckbox(event, ${i})`
+              );
+              tdInputElement.checked = displayData[i].checkStatus;
+              tdCheckboxElement.appendChild(tdInputElement);
+              tableBodyRowElement.appendChild(tdCheckboxElement);
+            }
+            const row = displayData[i];
+            for (let j = 0; j < cLength; j++) {
+              const column = columns[j];
+              if (!column.isRemoved) {
+                let key = column.key;
+                if (column.isCaseInsensitive) {
+                  key = key.toLowerCase();
+                }
+                if (column.renderCallback) {
+                  const jsx = column.renderCallback(row[key], row);
+                  const tdElemnt = document.createElement("td");
+                  tdElemnt.appendChild(jsx);
+                  tableBodyRowElement.appendChild(tdElemnt);
+                } else {
+                  const tablebodyDataElement = document.createElement("td");
+                  tablebodyDataElement.innerText = row[key];
+                  tableBodyRowElement.appendChild(tablebodyDataElement);
+                }
               }
             }
+            tableBodyElement.appendChild(tableBodyRowElement);
           }
-          retData.push(
-            `<tr class="${displayData[i].checkStatus ? "checked-row" : ""}">
-              ${tdJSX.join("")}
-            </tr>`
-          );
         }
+      } else {
+        console.error("element not found");
       }
     } else {
-      retData.push(
-        `<tr>
-          <td colspan="${cLength}" style="text-align: center;">There is no data</td>
-        </tr>`
-      );
+      const tableBodyRowElement = document.createElement("tr");
+      tableBodyRowElement.setAttribute("colspan", cLength);
+      tableBodyRowElement.setAttribute("style", `text-align: center;`);
+      tableBodyRowElement.innerText = "There is no data";
+      tableBodyElement.innerHTML = "";
+      tableBodyElement.appendChild(tableBodyRowElement);
     }
-    return retData.join("");
   }
 
   calculateTotalPages(displayData) {
@@ -106,44 +115,46 @@ export default class TableRenderer {
   tableHeader() {
     const { sortType, sortKey, columns, visibleCheckbox, displayData } = this;
     const length = columns.length;
-    const retData = [];
-    if (visibleCheckbox === true && displayData.length > 0) {
-      retData.push(
-        `<th>
-          <input
-            type="checkbox"
-            ${this.isAllChecked ? "checked" : ""}
-            onchange="checkAllBoxes(event)"
-            class="checkbox"
-          />
-        </th>`
-      );
-    }
-    for (let i = 0; i < length; i++) {
-      const item = columns[i];
-      let icon = "sort-none";
-      let onClickSortType = sortEnum.ASCENDING;
-      if (sortType === sortEnum.ASCENDING && sortKey === item.key) {
-        icon = "sort-ascending";
-        onClickSortType = sortEnum.DESCENDING;
-      } else if (sortType === sortEnum.DESCENDING && sortKey === item.key) {
-        icon = "sort-descending";
-        onClickSortType = sortEnum.ASCENDING;
+    const tableHeadElement = document.getElementById("info-table-header");
+    if (tableHeadElement) {
+      const tableHeadRowElement = document.createElement("tr");
+      if (visibleCheckbox === true && displayData.length > 0) {
+        const thCheckboxElement = document.createElement("th");
+        const thInputElement = document.createElement("input");
+        thInputElement.setAttribute("type", "checkbox");
+        thInputElement.setAttribute("class", "checkbox");
+        thInputElement.setAttribute("onchange", "checkAllBoxes(event)");
+        thInputElement.checked = this.isAllChecked;
+        thCheckboxElement.appendChild(thInputElement);
+        tableHeadRowElement.appendChild(thCheckboxElement);
       }
-      if (!item.isRemoved) {
-        retData.push(
-          `<th>
-            ${item.label}
-            <span
-              onclick="sortTable('${item.key}', event, ${onClickSortType})"
-              class="sort-icon ${icon}"
-            ></span>
-          </th>`
-        );
+      for (let i = 0; i < length; i++) {
+        const item = columns[i];
+        let icon = "sort-none";
+        let onClickSortType = sortEnum.ASCENDING;
+        if (sortType === sortEnum.ASCENDING && sortKey === item.key) {
+          icon = "sort-ascending";
+          onClickSortType = sortEnum.DESCENDING;
+        } else if (sortType === sortEnum.DESCENDING && sortKey === item.key) {
+          icon = "sort-descending";
+          onClickSortType = sortEnum.ASCENDING;
+        }
+        if (!item.isRemoved) {
+          const thDataElement = document.createElement("th");
+          thDataElement.innerText = item.label;
+          const thSpanElement = document.createElement("span");
+          thSpanElement.setAttribute(
+            "onclick",
+            `sortTable('${item.key}', event, ${onClickSortType})`
+          );
+          thSpanElement.setAttribute("class", `sort-icon ${icon}`);
+          thDataElement.appendChild(thSpanElement);
+          tableHeadRowElement.appendChild(thDataElement);
+        }
       }
+      tableHeadElement.innerHTML = "";
+      tableHeadElement.appendChild(tableHeadRowElement);
     }
-
-    return retData.join("");
   }
 
   checkAllBoxes(e) {
@@ -153,7 +164,9 @@ export default class TableRenderer {
       displayData[j].checkStatus = checked;
     }
     this.isAllChecked = checked;
-    this.renderTableUpdate();
+    this.sendCheckboxContentCallback(displayData);
+    this.tableBodyData();
+    this.tableHeader();
   }
 
   onChangeParentCheckbox(e, index) {
@@ -161,9 +174,11 @@ export default class TableRenderer {
     const checked = e.target.checked;
     let status = false;
     let countCheckedCheckbox = 0;
+    const isCheckedData = [];
     displayData[index].checkStatus = checked;
     for (let j = 0; j < displayData.length; j++) {
       if (displayData[j].checkStatus === true) {
+        isCheckedData.push(displayData[j]);
         countCheckedCheckbox++;
       } else {
         countCheckedCheckbox--;
@@ -175,7 +190,8 @@ export default class TableRenderer {
       status = false;
     }
     this.isAllChecked = status;
-    this.renderTableUpdate();
+    this.sendCheckboxContentCallback(isCheckedData);
+    this.tableBodyData();
   }
 
   peginationOfTable() {
@@ -265,6 +281,8 @@ export default class TableRenderer {
     this.currentPage = currentPage;
     this.setCurrentPageIntoView();
     this.render();
+    this.tableBodyData();
+    this.tableHeader();
   }
 
   setCurrentPageIntoView() {
@@ -288,6 +306,8 @@ export default class TableRenderer {
     this.totalPages = totalPages;
     this.currentPage = 0;
     this.render();
+    this.tableBodyData();
+    this.tableHeader();
   }
 
   onSearchChange(e) {
@@ -321,7 +341,7 @@ export default class TableRenderer {
       }
       this.displayData = queryResult;
       this.calculateTotalPages(queryResult);
-      this.renderTableUpdate();
+      this.tableBodyData();
     }
   }
 
@@ -364,7 +384,8 @@ export default class TableRenderer {
         .reverse();
     }
     this.displayData = data;
-    this.renderTableUpdate();
+    this.tableBodyData();
+    this.tableHeader();
   }
 
   renderColumns() {
@@ -394,7 +415,8 @@ export default class TableRenderer {
     const { columns } = this;
     const { checked } = e.target;
     columns[index].isRemoved = !checked;
-    this.renderTableUpdate();
+    this.tableBodyData();
+    this.tableHeader();
   }
 
   toggleColumnSelect(event) {
@@ -482,10 +504,9 @@ export default class TableRenderer {
         </div>
         <div class="${tableParentClass}" id="info-table-element">
           <table class="data-table">
-            <thead>
-              <tr>${this.tableHeader()}</tr>
+            <thead id="info-table-header">
             </thead>
-            <tbody>${this.tableBodyData()}</tbody>
+            <tbody id="info-table-Body"></tbody>
           </table>
         </div>
         <div class="d-block ">
