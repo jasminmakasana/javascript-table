@@ -1,5 +1,4 @@
 import { sortEnum } from "../constants";
-import { Utils } from "../utilities";
 
 export default class TableRenderer {
   constructor(
@@ -521,9 +520,7 @@ ${rows.join("")}
           <table class="data-table">
             <thead id="info-table-header">
             </thead>
-            <tbody id="info-table-Body" style="height: ${Utils.heightCalculation(
-              this.perPageLimit
-            )};"></tbody>
+            <tbody id="info-table-Body"></tbody>
           </table>
         </div>
           ${this.peginationOfTable()}

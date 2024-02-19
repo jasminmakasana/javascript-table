@@ -293,16 +293,6 @@ input[type="search"]:focus {
     flex-wrap: wrap;
 }
 
-/* .custom-table .pagination div {
-    display: flex;
-} */
-
-/* .custom-table .pagination div {
-    display: flex;
-    max-width: 400px;
-    overflow-x: auto;
-} */
-
 .custom-table .pagination a {
     display: block;
     padding: 5px 10px;
@@ -323,7 +313,6 @@ input[type="search"]:focus {
 }
 .custom-table .pagination .prev-next-btn{
     cursor: pointer;
-
 }
 .custom-table .pagination a.active {
     background-color: #cbcfd4;

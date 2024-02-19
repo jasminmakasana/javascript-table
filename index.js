@@ -46,8 +46,6 @@ export default class Table {
           Object.prototype.hasOwnProperty.call(options, "perPageLimit") &&
           options.perPageLimit !== undefined
             ? options.perPageLimit
-            : tableData.data.length <= 10
-            ? tableData.data.length
             : 10,
           options &&
           Object.prototype.hasOwnProperty.call(
