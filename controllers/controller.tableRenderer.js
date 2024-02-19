@@ -1,4 +1,6 @@
 import { sortEnum } from "../constants";
+import { Utils } from "../utilities";
+
 export default class TableRenderer {
   constructor(
     tableDivId,
@@ -233,29 +235,31 @@ export default class TableRenderer {
         );
       }
       return `<div class="pagination">
-          <div class="page-item previous">
-            <a
-              class="${
-                currentPage === 0 ? "page-link desable" : "page-link enable"
-              }"
-              onclick="navigatePage('pre', event, '')"
-            >
-              Previous
-            </a>
-          </div>
-          <ul>${rows.join("")}</ul>
-          <div class="page-item next">
-            <a
-              class="${
-                currentPage === this.totalPages - 1
-                  ? "page-link desable"
-                  : "page-link enable"
-              }"
-              onclick="navigatePage('next', event, '')"
-            >
-              Next
-            </a>
-          </div>
+          <ul>
+    <li class="prev-next-btn">
+          <a
+            class="${
+              currentPage === 0 ? "page-link desable" : "page-link enable"
+            }"
+            onclick="navigatePage('pre', event, '')"
+          >
+            Previous
+          </a>
+          </li>
+${rows.join("")} 
+<li class="prev-next-btn">
+        <a
+          class="${
+            currentPage === this.totalPages - 1
+              ? "page-link desable"
+              : "page-link enable"
+          }"
+          onclick="navigatePage('next', event, '')"
+        >
+          Next
+        </a>
+        </li>
+     </ul>
         </div>`;
     }
   }
@@ -476,25 +480,29 @@ export default class TableRenderer {
               <div class="toolbar-left-part">
               <div class="showing">${showingLine}</div>
               <div class="showby">
+              <div class="page-number">
               <label>Show</label>
               <select onchange="handleChange(event)" class="form-control">
                 ${this.displayShowPageLimit()}
               </select>
+              </div>
+              <div class="entries-dropdown">
               <span>entries per page</span>
-         
-            <div class="multiselect">
-            <div
-              class="form-control select-label" id="select-column-field"
-              onclick="toggleColumnSelect(event)"
-            >
-              Select columns <i class="arrow down"></i>
-            </div>
-            <div
+              <div class="multiselect">
+              <div
+                class="form-control select-label" id="select-column-field"
+                onclick="toggleColumnSelect(event)"
+              >
+                Select columns <i class="arrow down"></i>
+              </div>
+              <div
               class="border options showColumnSelect"
               id="column-dropdown-list"
             >
               ${this.renderColumns()}
             </div>
+            </div>
+           
            
           </div>
           </div>
@@ -513,7 +521,9 @@ export default class TableRenderer {
           <table class="data-table">
             <thead id="info-table-header">
             </thead>
-            <tbody id="info-table-Body"></tbody>
+            <tbody id="info-table-Body" style="height: ${Utils.heightCalculation(
+              this.perPageLimit
+            )};"></tbody>
           </table>
         </div>
           ${this.peginationOfTable()}

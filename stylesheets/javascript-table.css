@@ -10,7 +10,7 @@ body,
 }
 
 .container-fluid {
-    height: calc(100% - 36px);
+    padding: 14px;
 }
 
 .custom-table {
@@ -19,13 +19,16 @@ body,
 }
 
 .custom-table .toolbar {
-    padding:14px;
-    width:calc(100% - 28px);
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #ffffff;
-    position: fixed;
+}
+
+.custom-table .toolbar .toolbar-left-part {
+    display: flex;
+    align-items: center;
 }
 
 .custom-table .toolbar .showing {
@@ -37,13 +40,19 @@ body,
 }
 
 .custom-table .toolbar .showby {
+    display: flex;
+    align-items: center;
+}
+
+.custom-table .toolbar .showby .page-number {
     display: inline-block;
     border-left: 1px solid #a9b9c6;
     padding-left: 15px;
     margin-left: 15px;
+
 }
 
-.custom-table .toolbar .showby label {
+.custom-table .toolbar .showby .page-number label {
     display: inline-block;
     font-size: 13px;
     color: #333333;
@@ -53,7 +62,7 @@ body,
     margin-bottom: 0;
 }
 
-.custom-table .toolbar .showby .form-control {
+.custom-table .toolbar .showby .page-number .form-control {
     display: inline-block;
     width: 75px;
     border-radius: 3px;
@@ -69,7 +78,7 @@ body,
     cursor: pointer;
 }
 
-.custom-table .toolbar .showby span {
+.custom-table .toolbar .showby .page-number span {
     display: inline-block;
     font-size: 13px;
     line-height: 34px;
@@ -82,31 +91,34 @@ body,
     color: #3b4859;
 }
 
-.theme-light .custom-table .toolbar .showby span {
+.theme-light .custom-table .toolbar .showby .page-number span {
     color: #3b4859;
 }
 
-.custom-table .toolbar .multiselect {
+.custom-table .toolbar .entries-dropdown {
     border-left: 1px solid #a9b9c6;
     padding-left: 15px;
     margin-left: 15px;
-    z-index: 10;
-    display: inline-flex;
-    justify-content: space-between;
 }
 
-.custom-table .toolbar .multiselect .arrow {
+.custom-table .toolbar .entries-dropdown .multiselect {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-left: 12px;
+}
+
+.custom-table .toolbar .entries-dropdown .multiselect .arrow {
     border: solid black;
     border-width: 0 2px 2px 0;
     padding: 2px;
 }
 
-.custom-table .toolbar .multiselect .down {
+.custom-table .toolbar .entries-dropdown .multiselect .down {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
 
-.custom-table .toolbar .multiselect .form-control.select-label {
+.custom-table .toolbar .entries-dropdown .multiselect .form-control.select-label {
     width: 170px;
     cursor: pointer;
     display: flex;
@@ -124,7 +136,7 @@ body,
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.custom-table .toolbar .multiselect .options {
+.custom-table .toolbar .entries-dropdown .multiselect .options {
     position: absolute;
     top: 50px;
     background-color: #ffffff;
@@ -135,11 +147,11 @@ body,
     display: block;
 }
 
-.custom-table .toolbar .multiselect .options.showColumnSelect {
+.custom-table .toolbar .entries-dropdown .multiselect .options.showColumnSelect {
     display: none;
 }
 
-.custom-table .toolbar .multiselect .options .option {
+.custom-table .toolbar .entries-dropdown .multiselect .options .option {
     display: block;
     padding-bottom: 5px;
     margin-bottom: 0;
@@ -149,7 +161,7 @@ body,
     font-weight: 400;
 }
 
-.custom-table .toolbar .multiselect .options .option input {
+.custom-table .toolbar .entries-dropdown .multiselect .options .option input {
     margin-right: 10px;
     display: inline-block;
     vertical-align: middle;
@@ -204,7 +216,6 @@ input[type="search"]:focus {
     white-space: nowrap;
     width: 100%;
     border-collapse: collapse;
-    margin: 64px 0px;
 }
 
 .custom-table .sort-icon {
@@ -267,13 +278,11 @@ input[type="search"]:focus {
 
 .custom-table .pagination {
     display: flex;
-    justify-content: flex-end;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    justify-content: end;
     width: 100%;
     background-color: white;
-    padding: 14px;
+    margin-top: 12px;
+    flex-wrap: wrap;
 }
 
 .custom-table .pagination ul {
@@ -281,17 +290,18 @@ input[type="search"]:focus {
     padding: 0;
     margin: 0;
     display: flex;
+    flex-wrap: wrap;
 }
 
-.custom-table .pagination div {
+/* .custom-table .pagination div {
     display: flex;
-}
+} */
 
-.custom-table .pagination div {
+/* .custom-table .pagination div {
     display: flex;
     max-width: 400px;
     overflow-x: auto;
-}
+} */
 
 .custom-table .pagination a {
     display: block;
@@ -311,7 +321,10 @@ input[type="search"]:focus {
 .custom-table .pagination a:hover {
     background-color: #cbcfd4;
 }
+.custom-table .pagination .prev-next-btn{
+    cursor: pointer;
 
+}
 .custom-table .pagination a.active {
     background-color: #cbcfd4;
     color: black;
@@ -360,6 +373,7 @@ input[type="search"]:focus {
 }
 
 .custom-table .data-table-parent {
+    margin-top: 12px;
     overflow: auto;
     width: 100%;
 }
@@ -423,11 +437,11 @@ input[type="search"]:focus {
     color: #ffffff;
 }
 
-.custom-table.dark .toolbar .showby label {
+.custom-table.dark .toolbar .showby .page-number label {
     color: #ffffff;
 }
 
-.custom-table.dark .toolbar .showby span {
+.custom-table.dark .toolbar .showby .page-number span {
     color: #ffffff;
 }
 
@@ -445,30 +459,67 @@ input[type="search"]:focus {
 }
 
 
-@media only screen and (max-width: 900px) and (min-width: 320px) {
+@media only screen and (max-width: 930px) and (min-width: 699px) {
     .custom-table .toolbar {
         display: block;
     }
 
-    .custom-table .toolbar .showby {
-        border-left: none;
-        margin-left: 0px;
-        padding-left: 0px;
-
-    }
-
-    .custom-table .toolbar .multiselect {
-        border-left: none;
-        padding-left: 0px;
-        margin-left: 0px;
-    }
-
-    .custom-table table{
-       margin-top: 120px;
-    }
     .custom-table .toolbar .filter-search-control {
         margin-top: 15px;
     }
+   
 
+}
 
+@media only screen and (max-width: 698px) and (min-width: 320px) {
+    .custom-table .toolbar {
+        display: block;
+    }
+
+    .custom-table .toolbar .toolbar-left-part {
+        display: block;
+    }
+    .custom-table .toolbar .showby{
+        margin-top: 12px;
+    }
+    .custom-table .toolbar .showby .page-number {
+        border-left: none;
+        margin-left: 0px;
+        padding-left: 0;
+    }
+
+    .custom-table .toolbar .filter-search-control {
+        margin-top: 12px;
+        width: 50%;
+        justify-content: space-between;
+    }
+
+    .custom-table .toolbar .filter-search-control input[type="search"] {
+        width: 100%;
+    }
+    .custom-table .toolbar .entries-dropdown .multiselect .options {
+        top: 95px;
+    }
+}
+
+@media only screen and (max-width: 518px) {
+    .custom-table .toolbar .showby {
+        display: block;
+    }
+    .custom-table .toolbar .entries-dropdown .multiselect{
+        margin-left: 4px;
+    }
+    .custom-table .toolbar .entries-dropdown {
+        border-left: none;
+        padding-left: 0px;
+        margin-left: 0px;
+        margin-top: 12px;
+        font-size: 14px;
+    }
+    .custom-table .toolbar .entries-dropdown .multiselect .options {
+        top: 140px;
+    }
+    .custom-table .toolbar .filter-search-control {
+        width: 100%;
+    }
 }
